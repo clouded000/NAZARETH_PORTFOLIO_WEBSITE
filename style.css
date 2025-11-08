@@ -1,0 +1,449 @@
+/* ===========================================================
+   style.css — Shared stylesheet for all pages (retro pixel)
+   ===========================================================
+   Sections are clearly labelled so you can find page-specific
+   rules quickly:
+   - GLOBAL
+   - LANDING PAGE
+   - MAIN PAGE / NAVBAR
+   - ABOUT PAGE
+   - SKILLS PAGE
+   - PROJECTS PAGE
+   - CONTACT PAGE
+   - RESPONSIVE
+*/
+
+/* =========================
+   GLOBAL — fonts, colors
+   ========================= */
+@font-face {
+  font-family: 'Pixelate';
+  src: url('fonts/pixelate_2/Pixelate-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Pixelmax';
+  src: url('fonts/pixelmax (1)/Pixelmax-Regular.otf') format('opentype');
+}
+@font-face {
+  font-family: 'DogicaBold';
+  src: url('fonts/dogicabold.ttf') format('truetype');
+  
+}
+
+
+:root {
+  --bg-dark: #0b1220;
+  --accent: #79a7ff;
+  --card-bg: #ffffff;
+  --crt-glow: rgba(121,167,255,0.08);
+}
+
+/* Reset + base */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; font-family: 'Pixelate', Arial, sans-serif; background: var(--bg-dark); color: #fff; scroll-behavior: smooth; -webkit-font-smoothing: none; }
+a { color: inherit; text-decoration: none; }
+
+/* CRT wrapper used on every page */
+.crt-frame {
+  padding: 20px;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Subtle screen glow using a pseudo-element on body (scanlines below) */
+.crt-frame::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(1200px 400px at 50% 10%, rgba(255,255,255,0.02), transparent 30%),
+              radial-gradient(800px 300px at 50% 90%, rgba(0,0,0,0.05), transparent 30%);
+  mix-blend-mode: screen;
+  z-index: 0;
+}
+
+/* Scanlines overlay — authentic CRT look */
+.crt-frame::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(0,0,0,0) 0px,
+    rgba(0,0,0,0) 1px,
+    rgba(0,0,0,0.03) 2px
+  );
+  opacity: 0.18;
+  z-index: 1;
+}
+
+.hero-section {
+  background: url('images/otherpages_bg.gif') center top / cover no-repeat fixed;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ===========================================================
+   PARALLAX SHOWCASE
+   =========================================================== */
+/* ===========================================================
+   EXTRA PIXEL CLOUD PARALLAX EFFECT
+   =========================================================== */
+.parallax-showcase {
+  position: relative;
+  height: 120vh; /* extended height */
+  overflow: hidden;
+  background-color: #080808;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: 'DogicaBold', sans-serif;
+}
+
+/* Clouds setup */
+.parallax-layer.clouds {
+  background-image: url('images/6ab6ed08d21f05c48e6da543e9f98f5d.jpg'); /* your pixel cloud sprite/sheet */
+  background-repeat: repeat-x;
+  background-size: contain;
+  height: 100%;
+  opacity: 0.7;
+  animation: cloudmove 60s linear infinite;
+}
+
+/* Layer variations for parallax depth */
+.parallax-layer.cloud-1 {
+  top: 10%;
+  z-index: 2;
+  animation-duration: 90s;
+  opacity: 0.3;
+}
+.parallax-layer.cloud-2 {
+  top: 30%;
+  z-index: 3;
+  animation-duration: 70s;
+  opacity: 0.6;
+}
+.parallax-layer.cloud-3 {
+  top: 50%;
+  z-index: 4;
+  animation-duration: 50s;
+  opacity: 0.8;
+}
+
+/* slow cloud movement */
+@keyframes cloudmove {
+  from { background-position: 0 0; }
+  to { background-position: -2000px 0; }
+}
+
+
+/* small helpers */
+.pixel-title { font-family: 'Pixelmax'; font-size: 48px; margin-bottom: 6px; }
+.pixel-copy { font-size: 14px; line-height: 1.4; opacity: 0.95; }
+.pixel-btn {
+  font-family: 'Pixelate';
+  padding: 10px 22px;
+  border: 6px solid #000;
+  background: #fff;
+  color: #000;
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  position: relative;
+  box-shadow: 8px 6px 0 rgba(0,0,0,1);
+}
+.pixel-btn::after {
+  content: '';
+  position: absolute;
+  right: -8px;
+  bottom: -8px;
+  width: 8px; height: 8px;
+  background: #000;
+}
+.pixel-btn:hover { transform: translateY(-3px); transition: transform 0.12s ease; }
+.pixel-btn:focus { outline: 3px dashed var(--accent); outline-offset: 4px; }
+
+/* Pixel card base (used across pages) */
+.pixel-card {
+  background: var(--card-bg);
+  color: #000;
+  padding: 12px;
+  border-top: 6px solid #000;
+  border-left: 6px solid #000;
+  border-right: 4px solid #000;
+  border-bottom: 4px solid #000;
+  box-shadow: 10px 8px 0 rgba(0,0,0,1);
+  font-family: 'Pixelate';
+}
+
+/* ===========================================================
+   LANDING PAGE
+   =========================================================== */
+.landing-body { overflow: hidden; }
+.landing-main {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.landing-gif {
+  position: absolute;
+  inset: 0;
+  background-image: url('images/langdingpage_bg.gif');
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+  filter: contrast(1.05);
+}
+
+.landing-center {
+  z-index: 10;
+  color: #fff;
+  text-shadow: 0 3px 0 rgba(0,0,0,1);
+  position: relative;
+}
+
+.landing-center .pixel-title {
+  font-family: 'Pixelmax';
+  font-size: 72px; /* bigger title */
+  margin-bottom: 16px;
+}
+
+.landing-center .pixel-copy {
+  font-size: 20px; /* bigger welcome message */
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.landing-center .pixel-btn.large {
+  font-family: 'Pixelmax';
+  font-size: 24px; /* bigger button text */
+  padding: 16px 36px; /* larger button */
+  position: relative;
+  margin: 0 auto;
+  z-index: 20;
+}
+
+/* ===========================================================
+   MAIN PAGE + NAVBAR
+   =========================================================== */
+.main-body {
+  background-image: url('images/mainpage_bg.gif');
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+}
+
+/* === Sticky Navbar === */
+.sticky-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(4px);
+  border-bottom: 3px solid var(--accent);
+  z-index: 1000;
+}
+
+/* Add top padding so content isn't hidden behind navbar */
+body.main-body .container,
+body.main-body .hero-section {
+  padding-top: 100px;
+}
+
+.site-name {
+  font-family: 'Pixelmax';
+  font-size: 20px;
+  color: var(--accent);
+}
+.nav-links a {
+  color: #79a7ff;
+  margin-left: 18px;
+  text-decoration: none;
+  padding: 6px 10px;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  text-decoration: underline;
+}
+
+
+/* === HERO SECTION === */
+.hero-section {
+  background-image: url('images/otherpages_bg.gif'); /* or your image path */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+  text-align: center;
+  padding: 100px 20px;
+  font-family: 'Pixelmax';
+}
+
+
+/* === VIDEO SECTION === */
+.video-section {
+  background-color: #0a0a0a;
+  padding: 60px 20px;
+  text-align: center;
+  color: white;
+}
+
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 4px solid #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.15);
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.video-title {
+  font-family: 'Pixelmax';
+  font-size: 2rem;
+  margin-top: 32px;
+  text-transform: uppercase;
+}
+
+.video-description {
+  font-family: 'DogicaBold';
+  font-size: 0.9rem;
+  color: #d1d1d1;
+  max-width: 700px;
+  margin: 16px auto 0;
+  line-height: 1.8;
+  text-align: justify;
+}
+
+
+/* container used by many pages */
+.container {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 24px;
+}
+
+/* ===========================================================
+   ABOUT PAGE
+   =========================================================== */
+.pixel-copy {
+  font-family: 'Pixelate', sans-serif;
+  text-align: justify;          
+  line-height: 1.8;             
+  margin-bottom: 1.2em;        
+  color: #fff;                 
+}
+
+.two-col { display: flex; gap: 24px; align-items: center; margin-bottom: 24px; }
+.two-col .left { flex: 1; text-align: left; color: #fff; }
+.two-col .right { flex: 0 0 300px; text-align: center; }
+.profile-pic { width: 100%; max-width: 260px; border: 6px solid #000; display: block; }
+
+.cards-grid { margin: 24px 0; }
+.card-row { display: flex; gap: 16px; margin-top: 12px; flex-wrap: wrap; }
+.pixel-card h4 { font-family: 'Pixelmax'; margin-bottom: 8px; }
+
+/* org thumbnail inside card */
+.org-thumb { width: 36px; height: 36px; object-fit: cover; margin-left: 10px; vertical-align: middle; }
+
+/* ===========================================================
+   SKILLS PAGE
+   =========================================================== */
+.six-cols .pixel-card { flex: 1 1 calc(33.333% - 10px); }
+.three-cols .pixel-card { flex: 1 1 calc(33.333% - 10px); }
+
+/* ===========================================================
+   PROJECTS PAGE
+   =========================================================== */
+.projects-grid .card-row { display: flex; gap: 16px; flex-wrap: wrap; }
+.project-card { position: relative; overflow: hidden; flex: 1 1 calc(25% - 10px); }
+.project-card img { width: 100%; height: 180px; object-fit: cover; display: block; }
+.project-overlay {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  flex-direction: column; background: rgba(0,0,0,0.5); color: #fff; opacity: 0; transition: opacity 0.18s ease;
+}
+.project-card:hover .project-overlay { opacity: 1; }
+
+/* ===========================================================
+   CONTACT PAGE
+   =========================================================== */
+/* Social Links Layout */
+.social-links {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: flex-start; /* changed from center to flex-start */
+  margin-top: 24px;
+  text-align: left; /* ensures alignment stays consistent */
+}
+
+/* Social Button Style */
+.pixel-btn.social {
+  font-family: 'Pixelmax';
+  background: #fff;
+  color: #000;
+  padding: 10px 18px;
+  border: 3px solid #000;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+/* Hover Effect */
+.pixel-btn.social:hover {
+  background: #79a7ff;
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 0 #fff;
+}
+
+.map-section {
+  text-align: left;
+  margin-top: 48px; /* was 24px — doubled for extra space */
+}
+
+.map-section iframe {
+  width: 100%;
+  max-width: 800px;
+  border: 6px solid #000;
+  height: 450px;
+}
+
+
+
+/* ===========================================================
+   RESPONSIVE RULES
+   =========================================================== */
+@media (max-width: 900px) {
+  .two-col { flex-direction: column; }
+  .pixel-card, .project-card { flex: 1 1 100%; }
+  .pixel-title { font-size: 36px; }
+  .pixel-btn.large { bottom: 32px; font-size: 16px; }
+}
